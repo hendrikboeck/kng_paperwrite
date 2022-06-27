@@ -1,0 +1,92 @@
+#
+# Configuration for Paperwrite Knowledge Graph API
+#
+
+storage_option: local
+
+# Webserver - yaml
+#
+# Configuration for webserver and api properties.
+# If not provided, defaults for all subkeys will be used.
+webserver:
+
+  # Webserver Host - str
+  #
+  # IP on which webserver should accept REST-requests.
+  # If not provided, `0.0.0.0` is used, which accepts requests from any host.
+  host: "0.0.0.0"
+
+  # Webserver Port - int
+  #
+  # Port on which webserver should accept REST-requests.
+  # If not provided, 44777 is used.
+  port: 44777
+
+  # Api Prefix - str
+  #
+  # Global prefix for all api-path, that should be used.
+  # If not provided, no prefix will be used.
+  api_prefix: ""
+
+# IO - yaml
+#
+# Configuration for input-ouput and logging of the program.
+# If not provided, defaults for all subkeys will be used.
+io:
+
+  # IO Console Mode - enum
+  #
+  # Values for `cli_mode`:
+  #   critical - Show all critical messages.
+  #   error    - Show all error messages and other levels above.
+  #   warning  - Show all warning messages and other levels above.
+  #   info     - Show all info messages and other levels above.
+  #   debug    - Show all debug messages and other levels above.
+  #
+  # Mode which IO Controller should opperate in. Directly reflects which
+  # type of messages will be logged (if enabled) and outputed to their
+  # respective streams.
+  # If not provided, `info` will be used.
+  cli_mode: debug
+
+  # IO Log Mode - enum
+  #
+  # Values for `log_mode`:
+  #   critical - Show all critical messages.
+  #   error    - Show all error messages and other levels above.
+  #   warning  - Show all warning messages and other levels above.
+  #   info     - Show all info messages and other levels above.
+  #   debug    - Show all debug messages and other levels above.
+  #
+  # Mode which IO Controller should opperate in. Directly reflects which
+  # type of messages will be logged (if enabled) and outputed to their
+  # respective streams.
+  # If not provided, `warning` will be used.
+  log_mode: debug
+
+  # Log Filepath - str
+  #
+  # Path to log-file, where log-messages should be appended. File will not be
+  # overwritten, just appended to.
+  # If not provided, `ppw-api-<ISO datetime>.log` will be used.
+  log_filepath: ./ppw-api.log
+
+  # Log Directory - str
+  #
+  # Path to directory, where log-files should be stored, if it does not exist,
+  # it will be created. Only ONE of the options `log_filepath` or
+  # `log_directory` can be set. If both options are present, `log_filepath` will
+  # be preffered. All logs that are saved will have the format
+  # `ppw-api-<ISO datetime>.log`.
+  # If not profided, `log_filepath` will be used.
+  #log_directory: ./logs
+
+  # Stream Log - enum
+  #
+  # Values for `log_stream`:
+  #   sys:stdout - Default system stdout stream
+  #   sys:stderr - Default system stderr stream
+  #
+  # Stream specifications for default output stream of io controller.
+  # If not provided, `sys:stderr` will be used.
+  log_stream: sys:stdout

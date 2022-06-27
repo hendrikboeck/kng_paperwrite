@@ -1,0 +1,17 @@
+FROM tensorflow/tensorflow:1.15.5
+
+COPY requirements-cpu.txt /requirements.txt
+
+RUN pip install -r requirements.txt
+RUN python -m spacy download en_core_web_sm
+
+COPY setup-cpu.cfg /setup.cfg
+COPY setup.py /
+COPY Paperwrite /Paperwrite
+
+RUN pip install -e .
+
+COPY ppw.yml /
+
+EXPOSE 44777
+ENTRYPOINT [ "ppw-api" ]

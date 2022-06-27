@@ -1,0 +1,204 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@latest/styles/vis-network.css" type="text/css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network@latest/dist/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 100%;
+            background-color: #141519;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+        #loadingBar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width: 100%;
+            height: 100%;
+            background-color:rgba(200,200,200,0.8);
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+            opacity:1;
+        }
+
+        #bar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:20px;
+            height:20px;
+            margin:auto auto auto auto;
+            border-radius:11px;
+            border:2px solid rgba(30,30,30,0.05);
+            background: rgb(0, 173, 246); /* Old browsers */
+            box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+        }
+
+        #border {
+            position:absolute;
+            top:10px;
+            left:10px;
+            width:500px;
+            height:23px;
+            margin:auto auto auto auto;
+            box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+            border-radius:10px;
+        }
+
+        #text {
+            position:absolute;
+            top:8px;
+            left:530px;
+            width:30px;
+            height:50px;
+            margin:auto auto auto auto;
+            font-size:22px;
+            color: #000000;
+        }
+
+        div.outerBorder {
+            position:relative;
+            top:400px;
+            width:600px;
+            height:44px;
+            margin:auto auto auto auto;
+            border:8px solid rgba(0,0,0,0.1);
+            background: rgb(252,252,252); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+            border-radius:72px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+<div id="loadingBar">
+    <div class="outerBorder">
+        <div id="text">0%</div>
+        <div id="border">
+            <div id="bar"></div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "white"}, "id": "KNOWLEDGE", "label": "KNOWLEDGE", "shape": "dot"}, {"font": {"color": "white"}, "id": "many Knowledge variations.systems", "label": "many Knowledge variations.systems", "shape": "dot"}, {"font": {"color": "white"}, "id": "humans.\u2022 Technology", "label": "humans.\u2022 Technology", "shape": "dot"}, {"font": {"color": "white"}, "id": "fast  pace", "label": "fast  pace", "shape": "dot"}, {"font": {"color": "white"}, "id": "general  using", "label": "general  using", "shape": "dot"}, {"font": {"color": "white"}, "id": "industrial recommendations.\u2022 world", "label": "industrial recommendations.\u2022 world", "shape": "dot"}, {"font": {"color": "white"}, "id": "They", "label": "They", "shape": "dot"}, {"font": {"color": "white"}, "id": "much  attention", "label": "much  attention", "shape": "dot"}, {"font": {"color": "white"}, "id": "Embeddings\u2022 Conclusions\u2022 Graphs", "label": "Embeddings\u2022 Conclusions\u2022 Graphs", "shape": "dot"}, {"font": {"color": "white"}, "id": "complex  systems", "label": "complex  systems", "shape": "dot"}, {"font": {"color": "white"}, "id": "AmpliGraph", "label": "AmpliGraph", "shape": "dot"}, {"font": {"color": "white"}, "id": "knowledge graph knowledge models", "label": "knowledge graph knowledge models", "shape": "dot"}, {"font": {"color": "white"}, "id": "AmpliGraph9 Machine Learning", "label": "AmpliGraph9 Machine Learning", "shape": "dot"}, {"font": {"color": "white"}, "id": "key KG tasks", "label": "key KG tasks", "shape": "dot"}, {"font": {"color": "white"}, "id": "However research Ampligraph", "label": "However research Ampligraph", "shape": "dot"}, {"font": {"color": "white"}, "id": "wide research \u2022", "label": "wide research \u2022", "shape": "dot"}, {"font": {"color": "white"}, "id": "It", "label": "It", "shape": "dot"}, {"font": {"color": "white"}, "id": "Poor Data sources", "label": "Poor Data sources", "shape": "dot"}, {"font": {"color": "white"}, "id": "always  errors", "label": "always  errors", "shape": "dot"}, {"font": {"color": "white"}, "id": "Retail Knowledge graphs", "label": "Retail Knowledge graphs", "shape": "dot"}, {"font": {"color": "white"}, "id": "demographic content Netflix", "label": "demographic content Netflix", "shape": "dot"}, {"font": {"color": "white"}, "id": "Knowledge applications", "label": "Knowledge applications", "shape": "dot"}, {"font": {"color": "white"}, "id": "Knowledge Graphs.\u2022", "label": "Knowledge Graphs.\u2022", "shape": "dot"}, {"font": {"color": "white"}, "id": "Many", "label": "Many", "shape": "dot"}, {"font": {"color": "white"}, "id": "them", "label": "them", "shape": "dot"}, {"font": {"color": "white"}, "id": "deep learning KGs", "label": "deep learning KGs", "shape": "dot"}, {"font": {"color": "white"}, "id": "deep learning models", "label": "deep learning models", "shape": "dot"}, {"font": {"color": "white"}, "id": "Graph embeddings", "label": "Graph embeddings", "shape": "dot"}, {"font": {"color": "white"}, "id": "property vector", "label": "property vector", "shape": "dot"}, {"font": {"color": "white"}, "id": "whole \u2022 Graph graph", "label": "whole \u2022 Graph graph", "shape": "dot"}, {"font": {"color": "white"}, "id": "single  vector", "label": "single  vector", "shape": "dot"}, {"font": {"color": "white"}, "id": "why graph embeddings", "label": "why graph embeddings", "shape": "dot"}, {"font": {"color": "white"}, "id": "graph embeddings?reasons", "label": "graph embeddings?reasons", "shape": "dot"}, {"font": {"color": "white"}, "id": "dimensional  process", "label": "dimensional  process", "shape": "dot"}, {"font": {"color": "white"}, "id": "embedding", "label": "embedding", "shape": "dot"}, {"font": {"color": "white"}, "id": "e.g.  graphs", "label": "e.g.  graphs", "shape": "dot"}, {"font": {"color": "white"}, "id": "RNNs  sequences", "label": "RNNs  sequences", "shape": "dot"}, {"font": {"color": "white"}, "id": "l  that", "label": "l  that", "shape": "dot"}, {"font": {"color": "white"}, "id": "predicate", "label": "predicate", "shape": "dot"}, {"font": {"color": "white"}, "id": "vectorized \u2022 Embeddings", "label": "vectorized \u2022 Embeddings", "shape": "dot"}, {"font": {"color": "white"}, "id": "vectorized feature graphs", "label": "vectorized feature graphs", "shape": "dot"}, {"font": {"color": "white"}, "id": "Embeddings", "label": "Embeddings", "shape": "dot"}, {"font": {"color": "white"}, "id": "Consequently knowledge we", "label": "Consequently knowledge we", "shape": "dot"}, {"font": {"color": "white"}, "id": "ultimate knowledge AI", "label": "ultimate knowledge AI", "shape": "dot"}, {"font": {"color": "white"}, "id": "Graph data combining", "label": "Graph data combining", "shape": "dot"}, {"font": {"color": "white"}, "id": "deep methods.human it", "label": "deep methods.human it", "shape": "dot"}, {"font": {"color": "white"}, "id": "new Temporal which", "label": "new Temporal which", "shape": "dot"}, {"font": {"color": "white"}, "id": "temporal  knowledge", "label": "temporal  knowledge", "shape": "dot"}, {"font": {"color": "white"}, "id": "\u2022 exploitation which", "label": "\u2022 exploitation which", "shape": "dot"}, {"font": {"color": "white"}, "id": "existing exploitation methods", "label": "existing exploitation methods", "shape": "dot"}, {"font": {"color": "white"}, "id": "WHICH", "label": "WHICH", "shape": "dot"}, {"font": {"color": "white"}, "id": "critical users.dialogue.\u2022 Sufficiency", "label": "critical users.dialogue.\u2022 Sufficiency", "shape": "dot"}, {"font": {"color": "white"}, "id": "users", "label": "users", "shape": "dot"}, {"font": {"color": "white"}, "id": "\u2022 Extensibility", "label": "\u2022 Extensibility", "shape": "dot"}, {"font": {"color": "white"}, "id": "Yet knowledge graphs", "label": "Yet knowledge graphs", "shape": "dot"}, {"font": {"color": "white"}, "id": "higher level modal", "label": "higher level modal", "shape": "dot"}, {"font": {"color": "white"}, "id": "often research community", "label": "often research community", "shape": "dot"}, {"font": {"color": "white"}, "id": "ahead  industry", "label": "ahead  industry", "shape": "dot"}, {"font": {"color": "white"}, "id": "that", "label": "that", "shape": "dot"}, {"font": {"color": "white"}, "id": "graph structure", "label": "graph structure", "shape": "dot"}, {"font": {"color": "white"}, "id": "neural questions.knowledge base\u2022 birthdays", "label": "neural questions.knowledge base\u2022 birthdays", "shape": "dot"}, {"font": {"color": "white"}, "id": "film PREFIX", "label": "film PREFIX", "shape": "dot"}, {"font": {"color": "white"}, "id": "answering  system", "label": "answering  system", "shape": "dot"}, {"font": {"color": "white"}, "id": "greatest  Jeopardy", "label": "greatest  Jeopardy", "shape": "dot"}, {"font": {"color": "white"}, "id": "DrQA system", "label": "DrQA system", "shape": "dot"}, {"font": {"color": "white"}, "id": "open source license", "label": "open source license", "shape": "dot"}, {"font": {"color": "white"}, "id": "Knowledge Graph", "label": "Knowledge Graph", "shape": "dot"}, {"font": {"color": "white"}, "id": "ways", "label": "ways", "shape": "dot"}, {"font": {"color": "white"}, "id": "3  KG", "label": "3  KG", "shape": "dot"}, {"font": {"color": "white"}, "id": "clear use case", "label": "clear use case", "shape": "dot"}, {"font": {"color": "white"}, "id": "initial  vision", "label": "initial  vision", "shape": "dot"}, {"font": {"color": "white"}, "id": "data", "label": "data", "shape": "dot"}, {"font": {"color": "white"}, "id": "you", "label": "you", "shape": "dot"}, {"font": {"color": "white"}, "id": "7  STEP", "label": "7  STEP", "shape": "dot"}, {"font": {"color": "white"}, "id": "INFORMATION NEEDS", "label": "INFORMATION NEEDS", "shape": "dot"}, {"font": {"color": "white"}, "id": "domain stage", "label": "domain stage", "shape": "dot"}, {"font": {"color": "white"}, "id": "most  features", "label": "most  features", "shape": "dot"}, {"font": {"color": "white"}, "id": "decision making", "label": "decision making", "shape": "dot"}, {"font": {"color": "white"}, "id": "WORK", "label": "WORK", "shape": "dot"}, {"font": {"color": "white"}, "id": "ALREADY jump start", "label": "ALREADY jump start", "shape": "dot"}, {"font": {"color": "white"}, "id": "first  person", "label": "first  person", "shape": "dot"}, {"font": {"color": "white"}, "id": "successful knowledge graph initiative", "label": "successful knowledge graph initiative", "shape": "dot"}, {"font": {"color": "white"}, "id": "how  KG.vision", "label": "how  KG.vision", "shape": "dot"}, {"font": {"color": "white"}, "id": "it", "label": "it", "shape": "dot"}, {"font": {"color": "white"}, "id": "tech", "label": "tech", "shape": "dot"}, {"font": {"color": "white"}, "id": "closely domain ontology", "label": "closely domain ontology", "shape": "dot"}, {"font": {"color": "white"}, "id": "basic  graph", "label": "basic  graph", "shape": "dot"}, {"font": {"color": "white"}, "id": "when  ontology", "label": "when  ontology", "shape": "dot"}, {"font": {"color": "white"}, "id": "actual  graph", "label": "actual  graph", "shape": "dot"}, {"font": {"color": "white"}, "id": "OTHER  PROCESSESusers", "label": "OTHER  PROCESSESusers", "shape": "dot"}, {"font": {"color": "white"}, "id": "what", "label": "what", "shape": "dot"}, {"font": {"color": "white"}, "id": "why  what", "label": "why  what", "shape": "dot"}, {"font": {"color": "white"}, "id": "why  Diagnose", "label": "why  Diagnose", "shape": "dot"}, {"font": {"color": "white"}, "id": "significant  Identifying", "label": "significant  Identifying", "shape": "dot"}, {"font": {"color": "white"}, "id": "difficult  us", "label": "difficult  us", "shape": "dot"}, {"font": {"color": "white"}, "id": "candidate verb phrase", "label": "candidate verb phrase", "shape": "dot"}, {"font": {"color": "white"}, "id": "Great domain\u2022 score LinzPP18", "label": "Great domain\u2022 score LinzPP18", "shape": "dot"}, {"font": {"color": "white"}, "id": "GRAPHS Resource Description Framework", "label": "GRAPHS Resource Description Framework", "shape": "dot"}, {"font": {"color": "white"}, "id": "property graph property graph model", "label": "property graph property graph model", "shape": "dot"}, {"font": {"color": "white"}, "id": "chapter", "label": "chapter", "shape": "dot"}, {"font": {"color": "white"}, "id": "3  web", "label": "3  web", "shape": "dot"}, {"font": {"color": "white"}, "id": "directed edge triple", "label": "directed edge triple", "shape": "dot"}, {"font": {"color": "white"}, "id": "three  nodes", "label": "three  nodes", "shape": "dot"}, {"font": {"color": "white"}, "id": "IRI", "label": "IRI", "shape": "dot"}, {"font": {"color": "white"}, "id": "certain data string", "label": "certain data string", "shape": "dot"}, {"font": {"color": "white"}, "id": "23\u2022 RDF vocabulary", "label": "23\u2022 RDF vocabulary", "shape": "dot"}, {"font": {"color": "white"}, "id": "RDF graphs", "label": "RDF graphs", "shape": "dot"}, {"font": {"color": "white"}, "id": "\u003e", "label": "\u003e", "shape": "dot"}, {"font": {"color": "white"}, "id": "example", "label": "example", "shape": "dot"}, {"font": {"color": "white"}, "id": "vocabulary name they", "label": "vocabulary name they", "shape": "dot"}, {"font": {"color": "white"}, "id": "recursive Simple Protocol", "label": "recursive Simple Protocol", "shape": "dot"}, {"font": {"color": "white"}, "id": "SPARQL", "label": "SPARQL", "shape": "dot"}, {"font": {"color": "white"}, "id": "middleware", "label": "middleware", "shape": "dot"}, {"font": {"color": "white"}, "id": "along source RDF graph", "label": "along source RDF graph", "shape": "dot"}, {"font": {"color": "white"}, "id": "Most SPARQL forms", "label": "Most SPARQL forms", "shape": "dot"}, {"font": {"color": "white"}, "id": "triple SPARQL patterns", "label": "triple SPARQL patterns", "shape": "dot"}, {"font": {"color": "white"}, "id": "WHERE clause example", "label": "WHERE clause example", "shape": "dot"}, {"font": {"color": "white"}, "id": "single  variable", "label": "single  variable", "shape": "dot"}, {"font": {"color": "white"}, "id": "graphs data model", "label": "graphs data model", "shape": "dot"}, {"font": {"color": "white"}, "id": "popular graph database systems", "label": "popular graph database systems", "shape": "dot"}, {"font": {"color": "white"}, "id": "database systems", "label": "database systems", "shape": "dot"}, {"font": {"color": "white"}, "id": "general graph data", "label": "general graph data", "shape": "dot"}, {"font": {"color": "white"}, "id": "graph traversals", "label": "graph traversals", "shape": "dot"}, {"font": {"color": "white"}, "id": "graph data model", "label": "graph data model", "shape": "dot"}, {"font": {"color": "white"}, "id": "nodes", "label": "nodes", "shape": "dot"}, {"font": {"color": "white"}, "id": "relationship", "label": "relationship", "shape": "dot"}, {"font": {"color": "white"}, "id": "directed property art", "label": "directed property art", "shape": "dot"}, {"font": {"color": "white"}, "id": "node", "label": "node", "shape": "dot"}, {"font": {"color": "white"}, "id": "two  knows", "label": "two  knows", "shape": "dot"}, {"font": {"color": "white"}, "id": "other  itself", "label": "other  itself", "shape": "dot"}, {"font": {"color": "white"}, "id": "p1 p2WHERE Y We", "label": "p1 p2WHERE Y We", "shape": "dot"}, {"font": {"color": "white"}, "id": "popular graph data models", "label": "popular graph data models", "shape": "dot"}, {"font": {"color": "white"}, "id": "graph query queries", "label": "graph query queries", "shape": "dot"}, {"font": {"color": "white"}, "id": "subject user domain", "label": "subject user domain", "shape": "dot"}, {"font": {"color": "white"}, "id": "still  queries", "label": "still  queries", "shape": "dot"}, {"font": {"color": "white"}, "id": "graph query language", "label": "graph query language", "shape": "dot"}, {"font": {"color": "white"}, "id": "cities", "label": "cities", "shape": "dot"}, {"font": {"color": "white"}, "id": "1 M people?SELECT DISTINCT", "label": "1 M people?SELECT DISTINCT", "shape": "dot"}, {"font": {"color": "white"}, "id": "population", "label": "population", "shape": "dot"}, {"font": {"color": "white"}, "id": "much wdt%3AP1082 % attention", "label": "much wdt%3AP1082 % attention", "shape": "dot"}, {"font": {"color": "white"}, "id": "many knowledge graphs", "label": "many knowledge graphs", "shape": "dot"}, {"font": {"color": "white"}, "id": "4 \u2022 Knowledge storm", "label": "4 \u2022 Knowledge storm", "shape": "dot"}, {"font": {"color": "white"}, "id": "Web\u2022 RDF schema.org\u2022 Annotated data", "label": "Web\u2022 RDF schema.org\u2022 Annotated data", "shape": "dot"}, {"font": {"color": "white"}, "id": "Linked Data10 Linked PREFIX", "label": "Linked Data10 Linked PREFIX", "shape": "dot"}, {"font": {"color": "white"}, "id": "KNOWLEDGE RDF triples\u2022 KBs", "label": "KNOWLEDGE RDF triples\u2022 KBs", "shape": "dot"}, {"font": {"color": "white"}, "id": "15 \u2022 Knowledge graphs", "label": "15 \u2022 Knowledge graphs", "shape": "dot"}, {"font": {"color": "white"}, "id": "quality Semantic Middleware Layer", "label": "quality Semantic Middleware Layer", "shape": "dot"}, {"font": {"color": "white"}, "id": "This", "label": "This", "shape": "dot"}, {"font": {"color": "white"}, "id": "resulting data set", "label": "resulting data set", "shape": "dot"}, {"font": {"color": "white"}, "id": "typically research we", "label": "typically research we", "shape": "dot"}, {"font": {"color": "white"}, "id": "data time", "label": "data time", "shape": "dot"}, {"font": {"color": "white"}, "id": "precise  KG", "label": "precise  KG", "shape": "dot"}, {"font": {"color": "white"}, "id": "directed  graph", "label": "directed  graph", "shape": "dot"}, {"font": {"color": "white"}, "id": "Semantic Web community", "label": "Semantic Web community", "shape": "dot"}, {"font": {"color": "white"}, "id": "two  branches", "label": "two  branches", "shape": "dot"}, {"font": {"color": "white"}, "id": "based John they", "label": "based John they", "shape": "dot"}, {"font": {"color": "white"}, "id": "based John Sowa", "label": "based John Sowa", "shape": "dot"}, {"font": {"color": "white"}, "id": "semantic  that", "label": "semantic  that", "shape": "dot"}, {"font": {"color": "white"}, "id": "such Satori\u2022 Yandex Google", "label": "such Satori\u2022 Yandex Google", "shape": "dot"}, {"font": {"color": "white"}, "id": "Bing", "label": "Bing", "shape": "dot"}, {"font": {"color": "white"}, "id": "schema.org", "label": "schema.org", "shape": "dot"}, {"font": {"color": "white"}, "id": "CIA World", "label": "CIA World", "shape": "dot"}, {"font": {"color": "white"}, "id": "70 billion 70 facts", "label": "70 billion 70 facts", "shape": "dot"}, {"font": {"color": "white"}, "id": "2019\u2022  it", "label": "2019\u2022  it", "shape": "dot"}, {"font": {"color": "white"}, "id": "everyday infer life", "label": "everyday infer life", "shape": "dot"}, {"font": {"color": "white"}, "id": "GDelt", "label": "GDelt", "shape": "dot"}, {"font": {"color": "white"}, "id": "entire news world", "label": "entire news world", "shape": "dot"}, {"font": {"color": "white"}, "id": "free knowledge base", "label": "free knowledge base", "shape": "dot"}, {"font": {"color": "white"}, "id": "Semantic Wikimedia Foundation", "label": "Semantic Wikimedia Foundation", "shape": "dot"}, {"font": {"color": "white"}, "id": "We", "label": "We", "shape": "dot"}, {"font": {"color": "white"}, "id": "interrelated graph 27", "label": "interrelated graph 27", "shape": "dot"}]);
+        edges = new vis.DataSet([{"arrows": "to", "from": "KNOWLEDGE", "label": "take different", "to": "many Knowledge variations.systems"}, {"arrows": "to", "from": "humans.\u2022 Technology", "label": "is", "to": "fast  pace"}, {"arrows": "to", "from": "general  using", "label": "becoming obsolete", "to": "industrial recommendations.\u2022 world"}, {"arrows": "to", "from": "They", "label": "are", "to": "much  attention"}, {"arrows": "to", "from": "Embeddings\u2022 Conclusions\u2022 Graphs", "label": "offer", "to": "complex  systems"}, {"arrows": "to", "from": "AmpliGraph", "label": "increases", "to": "knowledge graph knowledge models"}, {"arrows": "to", "from": "AmpliGraph9 Machine Learning", "label": "based on", "to": "key KG tasks"}, {"arrows": "to", "from": "However research Ampligraph", "label": "used", "to": "wide research \u2022"}, {"arrows": "to", "from": "It", "label": "\u0027s", "to": "much  attention"}, {"arrows": "to", "from": "Poor Data sources", "label": "are", "to": "always  errors"}, {"arrows": "to", "from": "Retail Knowledge graphs", "label": "been for", "to": "demographic content Netflix"}, {"arrows": "to", "from": "Knowledge applications", "label": "are multiple", "to": "Knowledge Graphs.\u2022"}, {"arrows": "to", "from": "Many", "label": "are", "to": "them"}, {"arrows": "to", "from": "deep learning KGs", "label": "developed", "to": "deep learning models"}, {"arrows": "to", "from": "Graph embeddings", "label": "are", "to": "property vector"}, {"arrows": "to", "from": "whole \u2022 Graph graph", "label": "represented with", "to": "single  vector"}, {"arrows": "to", "from": "why graph embeddings", "label": "compare", "to": "graph embeddings?reasons"}, {"arrows": "to", "from": "dimensional  process", "label": "called", "to": "embedding"}, {"arrows": "to", "from": "e.g.  graphs", "label": "(", "to": "RNNs  sequences"}, {"arrows": "to", "from": "l  that", "label": "holds", "to": "predicate"}, {"arrows": "to", "from": "vectorized \u2022 Embeddings", "label": "tries", "to": "vectorized feature graphs"}, {"arrows": "to", "from": "Embeddings", "label": "compressed", "to": "much  attention"}, {"arrows": "to", "from": "Consequently knowledge we", "label": "chosen", "to": "ultimate knowledge AI"}, {"arrows": "to", "from": "Graph data combining", "label": "is essential", "to": "deep methods.human it"}, {"arrows": "to", "from": "new Temporal which", "label": "GENERATION OF", "to": "temporal  knowledge"}, {"arrows": "to", "from": "\u2022 exploitation which", "label": "IMPROVING", "to": "existing exploitation methods"}, {"arrows": "to", "from": "WHICH", "label": "obscure critical", "to": "critical users.dialogue.\u2022 Sufficiency"}, {"arrows": "to", "from": "users", "label": "be able", "to": "\u2022 Extensibility"}, {"arrows": "to", "from": "Yet knowledge graphs", "label": "been", "to": "higher level modal"}, {"arrows": "to", "from": "often research community", "label": "is several", "to": "ahead  industry"}, {"arrows": "to", "from": "that", "label": "is", "to": "graph structure"}, {"arrows": "to", "from": "neural questions.knowledge base\u2022 birthdays", "label": "DISTINCT", "to": "film PREFIX"}, {"arrows": "to", "from": "answering  system", "label": "\u2022", "to": "greatest  Jeopardy"}, {"arrows": "to", "from": "DrQA system", "label": "made", "to": "open source license"}, {"arrows": "to", "from": "Knowledge Graph", "label": "are", "to": "ways"}, {"arrows": "to", "from": "3  KG", "label": "start with", "to": "clear use case"}, {"arrows": "to", "from": "initial  vision", "label": "Do", "to": "data"}, {"arrows": "to", "from": "you", "label": "be", "to": "7  STEP"}, {"arrows": "to", "from": "INFORMATION NEEDS", "label": "is critical", "to": "domain stage"}, {"arrows": "to", "from": "most  features", "label": "Ask", "to": "decision making"}, {"arrows": "to", "from": "WORK", "label": "FIND", "to": "ALREADY jump start"}, {"arrows": "to", "from": "first  person", "label": "is", "to": "successful knowledge graph initiative"}, {"arrows": "to", "from": "They", "label": "decide", "to": "how  KG.vision"}, {"arrows": "to", "from": "it", "label": "is", "to": "tech"}, {"arrows": "to", "from": "closely domain ontology", "label": "is", "to": "basic  graph"}, {"arrows": "to", "from": "when  ontology", "label": "add", "to": "actual  graph"}, {"arrows": "to", "from": "OTHER  PROCESSESusers", "label": "INTEGRATE", "to": "it"}, {"arrows": "to", "from": "it", "label": "etc.\u2022", "to": "what"}, {"arrows": "to", "from": "why  what", "label": "determine", "to": "why  Diagnose"}, {"arrows": "to", "from": "significant  Identifying", "label": "give", "to": "difficult  us"}, {"arrows": "to", "from": "candidate verb phrase", "label": "is", "to": "Great domain\u2022 score LinzPP18"}, {"arrows": "to", "from": "GRAPHS Resource Description Framework", "label": "are", "to": "property graph property graph model"}, {"arrows": "to", "from": "chapter", "label": "introduces", "to": "3  web"}, {"arrows": "to", "from": "directed edge triple", "label": "consists of", "to": "three  nodes"}, {"arrows": "to", "from": "IRI", "label": "is", "to": "certain data string"}, {"arrows": "to", "from": "23\u2022 RDF vocabulary", "label": "is", "to": "RDF graphs"}, {"arrows": "to", "from": "\u003e", "label": "is", "to": "example"}, {"arrows": "to", "from": "vocabulary name they", "label": "express", "to": "recursive Simple Protocol"}, {"arrows": "to", "from": "SPARQL", "label": "\u2022", "to": "middleware"}, {"arrows": "to", "from": "SPARQL", "label": "contains", "to": "along source RDF graph"}, {"arrows": "to", "from": "Most SPARQL forms", "label": "be", "to": "triple SPARQL patterns"}, {"arrows": "to", "from": "WHERE clause example", "label": "shows", "to": "single  variable"}, {"arrows": "to", "from": "graphs data model", "label": "used by many", "to": "popular graph database systems"}, {"arrows": "to", "from": "database systems", "label": "handle general", "to": "general graph data"}, {"arrows": "to", "from": "that", "label": "distinguish", "to": "graph traversals"}, {"arrows": "to", "from": "graph data model", "label": "consists of", "to": "nodes"}, {"arrows": "to", "from": "relationship", "label": "are", "to": "directed property art"}, {"arrows": "to", "from": "node", "label": "has", "to": "two  knows"}, {"arrows": "to", "from": "other  itself", "label": "represented as", "to": "graph data model"}, {"arrows": "to", "from": "p1 p2WHERE Y We", "label": "reviewed", "to": "popular graph data models"}, {"arrows": "to", "from": "graph query queries", "label": "are", "to": "subject user domain"}, {"arrows": "to", "from": "still  queries", "label": "allow", "to": "graph query language"}, {"arrows": "to", "from": "cities", "label": "have more", "to": "1 M people?SELECT DISTINCT"}, {"arrows": "to", "from": "population", "label": "Doubts?Thank", "to": "much wdt%3AP1082 % attention"}, {"arrows": "to", "from": "many knowledge graphs", "label": "raised", "to": "4 \u2022 Knowledge storm"}, {"arrows": "to", "from": "Web\u2022 RDF schema.org\u2022 Annotated data", "label": "made \u2022", "to": "Linked Data10 Linked PREFIX"}, {"arrows": "to", "from": "KNOWLEDGE RDF triples\u2022 KBs", "label": "use", "to": "15 \u2022 Knowledge graphs"}, {"arrows": "to", "from": "They", "label": "stored", "to": "quality Semantic Middleware Layer"}, {"arrows": "to", "from": "This", "label": "sits", "to": "resulting data set"}, {"arrows": "to", "from": "typically research we", "label": "reviewed", "to": "data time"}, {"arrows": "to", "from": "precise  KG", "label": "has", "to": "directed  graph"}, {"arrows": "to", "from": "Semantic Web community", "label": "split for", "to": "two  branches"}, {"arrows": "to", "from": "based John they", "label": "\u2022", "to": "based John Sowa"}, {"arrows": "to", "from": "semantic  that", "label": "Answer\u2022 In early", "to": "such Satori\u2022 Yandex Google"}, {"arrows": "to", "from": "Bing", "label": "introduced", "to": "schema.org"}, {"arrows": "to", "from": "CIA World", "label": "makes", "to": "70 billion 70 facts"}, {"arrows": "to", "from": "2019\u2022  it", "label": "\u2022", "to": "everyday infer life"}, {"arrows": "to", "from": "GDelt", "label": "Monitors", "to": "entire news world"}, {"arrows": "to", "from": "free knowledge base", "label": "base from", "to": "Semantic Wikimedia Foundation"}, {"arrows": "to", "from": "We", "label": "had", "to": "interrelated graph 27"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": false,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+        network.on("stabilizationProgress", function(params) {
+      		document.getElementById('loadingBar').removeAttribute("style");
+	        var maxWidth = 496;
+	        var minWidth = 20;
+	        var widthFactor = params.iterations/params.total;
+	        var width = Math.max(minWidth,maxWidth * widthFactor);
+
+	        document.getElementById('bar').style.width = width + 'px';
+	        document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+	    });
+	    network.once("stabilizationIterationsDone", function() {
+	        document.getElementById('text').innerHTML = '100%';
+	        document.getElementById('bar').style.width = '496px';
+	        document.getElementById('loadingBar').style.opacity = 0;
+	        // really clean the dom element
+	        setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+	    });
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
