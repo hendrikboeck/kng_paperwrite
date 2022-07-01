@@ -1,4 +1,6 @@
 FROM tensorflow/tensorflow:1.15.5
+RUN apt update -y
+RUN apt install default-jdk -y
 
 COPY requirements-cpu.txt /requirements.txt
 
